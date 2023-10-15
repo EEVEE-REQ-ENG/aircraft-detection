@@ -1,7 +1,11 @@
-from tkinter import Tk
+from tkinter import *
+from MainWindow import MainWindow
 
-main = Tk()
+def main():
+    root = Tk()
+    MainWindow(root)
+    root.mainloop()
 
-main.geometry("400x400")
-main.resizable(False, False)
-main.mainloop()
+
+if __name__ == "__main__":
+    main()

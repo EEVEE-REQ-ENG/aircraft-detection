@@ -3,6 +3,8 @@ from tkinter import filedialog
 
 from PIL import Image, ImageTk
 
+from components.RoundedButton import *
+
 
 class MainWindow:
 
@@ -53,13 +55,25 @@ class MainWindow:
         self.__make_process_button(self.frame)
 
     def __make_load_button(self, frame):
-        self.loadButton = Button(frame, text="Select image", command=self.handle_open_dialog)
-        self.loadButton.grid(row=0, column=0, padx=5)
+        self.loadButton = RoundedButton(
+            frame,
+            text="Select image",
+            radius=25,
+            action=self.handle_open_dialog,
+            width=200,
+            height=50)
+        self.loadButton.pack(side="left")
 
     def __make_process_button(self, frame):
-        self.processButton = Button(frame, text="Process", command=self.process_image)
-        self.processButton.grid(row=0, column=2, padx=5)
-        self.processButton.config(state="disabled")
+        self.processButton = RoundedButton(
+            frame,
+            text="Process",
+            radius=25,
+            action=self.process_image,
+            width=200,
+            height=50)
+        self.processButton.pack(side="left")
+        self.processButton.disabled(is_disabled=True)
 
     # methods
 
@@ -73,7 +87,7 @@ class MainWindow:
             img = img.resize((self.__canvasWidth, self.__canvasHeight))
             self.image = ImageTk.PhotoImage(img)
             self.canvas.itemconfig(self.image_on_canvas, image=self.image)
-            self.processButton.config(state="normal")
+            self.processButton.disabled(is_disabled=False)
         # TODO: ML component integration
 
     def process_image(self):

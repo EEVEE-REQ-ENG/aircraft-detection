@@ -4,7 +4,7 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 
 from components.RoundedButton import *
-
+from aircraft_detector import Model
 
 class MainWindow:
 
@@ -35,6 +35,9 @@ class MainWindow:
 
         # display buttons frame
         self.__make_buttons_frame(main)
+
+        # load model
+        self.__model = Model()
 
     # components
 
@@ -82,8 +85,7 @@ class MainWindow:
         self.path = filedialog.askopenfilename(filetypes=filetypes)
         if self.path:
             # TODO: remove after implementation of the ML component
-            temporary_path = "resources/initial.png"
-            img = Image.open(temporary_path)
+            img = Image.open(self.path)
             img = img.resize((self.__canvasWidth, self.__canvasHeight))
             self.image = ImageTk.PhotoImage(img)
             self.canvas.itemconfig(self.image_on_canvas, image=self.image)
@@ -91,11 +93,7 @@ class MainWindow:
         # TODO: ML component integration
 
     def process_image(self):
-        if self.path == "":
-            return
-        path = "resources\\result.png"
-        if path:
-            img = Image.open(path)
-            img = img.resize((self.__canvasWidth, self.__canvasHeight))
-            self.image = ImageTk.PhotoImage(img)
-            self.canvas.itemconfig(self.image_on_canvas, image=self.image)
+        img = Image.open(self.__model.process_image(self.path))
+        img = img.resize((self.__canvasWidth, self.__canvasHeight))
+        self.image = ImageTk.PhotoImage(img)
+        self.canvas.itemconfig(self.image_on_canvas, image=self.image)

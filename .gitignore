@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+result_*.png
+ieeercnn_vgg16_1.h5
+.idea
+
 # C extensions
 *.so
 
